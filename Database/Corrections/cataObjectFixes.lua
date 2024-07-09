@@ -104,9 +104,6 @@ function CataObjectFixes.Load()
             [objectKeys.spawns] = {[zoneIDs.SHIMMERING_EXPANSE]={{56.56,80.29}}},
             [objectKeys.zoneID] = zoneIDs.SHIMMERING_EXPANSE,
         },
-        [203461] = { -- Fuel Sampling Station
-            [objectKeys.spawns] = {[zoneIDs.ABYSSAL_DEPTHS]={{51.49,60.41},{55.8,72.5}}}
-        },
         [204281] = { -- Worm Mound
             [objectKeys.spawns] = {[1519]={{49.24,18.03},{52.53,14.86},{64.01,16.59},{63.39,5.73},{64.93,8.47},{56.45,22.58},{55.73,16.51},{53.73,19.56},{60.51,6.85},{58.05,10.49},{62.12,17.65},{59.07,20.64}}},
         },
@@ -150,6 +147,12 @@ function CataObjectFixes.Load()
             [objectKeys.zoneID] = zoneIDs.THE_EXODAR,
             [objectKeys.questStarts] = {27724,27726,27727,28492,28503,28507,28511,28525,28528,28531,28539,28543,28544,28550,28552,28558,28559,28708},
         },
+        [207327] = { -- Pip's Mole Machine
+            [objectKeys.name] = "Pip's Mole Machine",
+        },
+        [207328] = { -- Pip's Mole Machine
+            [objectKeys.name] = "Pip's Mole Machine",
+        },
         [207381] = { -- Deep Alabaster Crystal Chunk
             [objectKeys.spawns] = {},
         },
@@ -191,7 +194,7 @@ function CataObjectFixes.Load()
         [460000] = {
             [objectKeys.name] = "Harpy Signal Fire",
             [objectKeys.zoneID] = zoneIDs.MOUNT_HYJAL,
-            [objectKeys.spawns] = {[zoneIDs.MOUNT_HYJAL] = {{32.8,46.6},{36.6,44.7},{38.3,44.1},{44.6,51.3}}},
+            [objectKeys.spawns] = {[zoneIDs.MOUNT_HYJAL] = {{32.81,46.53},{35.59,47.3},{36.53,44.72},{38.33,44.18},{49.77,46.3},{44.66,51.24}}},
         },
         [460001] = {
             [objectKeys.name] = "Fossil Archaeology Object",
@@ -206,5 +209,58 @@ function CataObjectFixes.Load()
             [objectKeys.zoneID] = zoneIDs.AZSHARA,
             [objectKeys.spawns] = {[zoneIDs.AZSHARA] = {{14.41,75.74}}},
         },
+        [460004] = {
+            [objectKeys.name] = "Vision of the Battlemaiden",
+            [objectKeys.zoneID] = zoneIDs.SHIMMERING_EXPANSE,
+            [objectKeys.spawns] = {[zoneIDs.SHIMMERING_EXPANSE] = {{40.49,75.58}}},
+        },
+        [460005] = {
+            [objectKeys.name] = "Vision of the Battlemaiden",
+            [objectKeys.zoneID] = zoneIDs.SHIMMERING_EXPANSE,
+            [objectKeys.spawns] = {[zoneIDs.SHIMMERING_EXPANSE] = {{33.1,77.81}}},
+        },
+        [460006] = {
+            [objectKeys.name] = "Vision of the Battlemaiden",
+            [objectKeys.zoneID] = zoneIDs.SHIMMERING_EXPANSE,
+            [objectKeys.spawns] = {[zoneIDs.SHIMMERING_EXPANSE] = {{28.92,78.64}}},
+        },
+        [460007] = {
+            [objectKeys.name] = "Flameward",
+            [objectKeys.zoneID] = zoneIDs.MOUNT_HYJAL,
+            [objectKeys.spawns] = {[zoneIDs.MOUNT_HYJAL] = {{34.78,52.74},{33.04,64.58},{38.31,63.93},{41.83,56.12},{40.51,53.14}}},
+        },
+        [460008] = {
+            [objectKeys.name] = "Rod of Subjugation",
+            [objectKeys.spawns] = {[zoneIDs.MOUNT_HYJAL]={{23.9,55.9}}},
+            [objectKeys.zoneID] = zoneIDs.MOUNT_HYJAL,
+        },
+        [460009] = {
+            [objectKeys.name] = "Rod of Subjugation",
+            [objectKeys.spawns] = {[zoneIDs.MOUNT_HYJAL]={{25.25,54.8}}},
+            [objectKeys.zoneID] = zoneIDs.MOUNT_HYJAL,
+        },
     }
+end
+
+function CataObjectFixes:LoadFactionFixes()
+    local objectKeys = QuestieDB.objectKeys
+    local zoneIDs = ZoneDB.zoneIDs
+
+    local objectFixesHorde = {
+        [203461] = { -- Fuel Sampling Station
+            [objectKeys.spawns] = {[zoneIDs.ABYSSAL_DEPTHS]={{51.49,60.41}}},
+        },
+    }
+
+    local objectFixesAlliance = {
+        [203461] = { -- Fuel Sampling Station
+            [objectKeys.spawns] = {[zoneIDs.ABYSSAL_DEPTHS]={{55.8,72.44}}},
+        },
+    }
+
+    if UnitFactionGroup("Player") == "Horde" then
+        return objectFixesHorde
+    else
+        return objectFixesAlliance
+    end
 end

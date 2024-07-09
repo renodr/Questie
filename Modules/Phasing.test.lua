@@ -480,6 +480,15 @@ describe("Phasing", function()
 
             assert.is_false(Phasing.IsSpawnVisible(phases.HYJAL_TWILIGHT_CHAPTER))
         end)
+
+        it("should correctly position Commander Jarod Shadowsong", function()
+            assert.is_true(Phasing.IsSpawnVisible(phases.JAROD_NEAR_PORTAL))
+            assert.is_false(Phasing.IsSpawnVisible(phases.JAROD_MIDDLE_ISLAND))
+
+            Questie.db.char.complete[25608] = true
+            assert.is_false(Phasing.IsSpawnVisible(phases.JAROD_NEAR_PORTAL))
+            assert.is_true(Phasing.IsSpawnVisible(phases.JAROD_MIDDLE_ISLAND))
+        end)
     end)
 
     describe("Vash'jir", function()
@@ -557,15 +566,8 @@ describe("Phasing", function()
             assert.is_true(Phasing.IsSpawnVisible(phases.VASHJIR_NORTHERN_GARDEN))
         end)
 
-        it("should return true for Nar'Shola Terrace West when 26191 or 25750 is complete", function()
+        it("should return true for Nar'Shola Terrace West when 26191 is complete", function()
             Questie.db.char.complete[26191] = true
-
-            assert.is_true(Phasing.IsSpawnVisible(phases.VASHJIR_NAR_SHOLA_TERRACE_WEST))
-            assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_NORTHERN_GARDEN))
-            assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_NAR_SHOLA_TERRACE))
-
-            Questie.db.char.complete[26191] = false
-            Questie.db.char.complete[25750] = true
 
             assert.is_true(Phasing.IsSpawnVisible(phases.VASHJIR_NAR_SHOLA_TERRACE_WEST))
             assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_NORTHERN_GARDEN))
@@ -584,15 +586,21 @@ describe("Phasing", function()
             assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_LADY_NAZ_JAR_AT_TEMPLE))
         end)
 
-        it("should return true for Erunak Stonespeaker at Cavern before 25988 is complete", function()
+        it("should return true for Erunak Stonespeaker at Cavern before 25988 is complete or after 26143 is complete", function()
             Questie.db.char.complete[25988] = false
+
+            assert.is_true(Phasing.IsSpawnVisible(phases.VASHJIR_ERANUK_AT_CAVERN))
+            assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_ERANUK_AT_PROMONTORY_POINT))
+
+            Questie.db.char.complete[26143] = true
 
             assert.is_true(Phasing.IsSpawnVisible(phases.VASHJIR_ERANUK_AT_CAVERN))
             assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_ERANUK_AT_PROMONTORY_POINT))
         end)
 
-        it("should return true for Erunak Stonespeaker at Promontory Point when 25988 is complete", function()
+        it("should return true for Erunak Stonespeaker at Promontory Point when 25988 is complete and 26143 is not", function()
             Questie.db.char.complete[25988] = true
+            Questie.db.char.complete[26143] = false
 
             assert.is_true(Phasing.IsSpawnVisible(phases.VASHJIR_ERANUK_AT_PROMONTORY_POINT))
             assert.is_false(Phasing.IsSpawnVisible(phases.VASHJIR_ERANUK_AT_CAVERN))
@@ -673,6 +681,15 @@ describe("Phasing", function()
             assert.is_false(Phasing.IsSpawnVisible(phases.THE_STONE_MARCH))
             assert.is_false(Phasing.IsSpawnVisible(phases.TEMPLE_OF_EARTH_CHAPTER_1))
             assert.is_false(Phasing.IsSpawnVisible(phases.TEMPLE_OF_EARTH_CHAPTER_2))
+        end)
+
+        it("should show the NPCs at Therazane's Throne after quests 26584 26585 26659 are completed", function()
+            Questie.db.char.complete[26584] = true
+            Questie.db.char.complete[26585] = true
+            Questie.db.char.complete[26659] = true
+
+            assert.is_true(Phasing.IsSpawnVisible(phases.NPCS_AT_THERAZANES_THRONE))
+
         end)
     end)
 
