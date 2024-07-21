@@ -916,50 +916,64 @@ describe("Phasing", function()
             assert.is_false(Phasing.IsSpawnVisible(phases.TWILIGHT_CARAVAN_AMBUSH_ALLIANCE))
         end)
 
-        it("should return true for Grim Batol Attack Horde when 28090 and 28091 are complete", function()
+        it("should return true for Grim Batol Attack Horde when any objective of 28090 or 28091 is complete or one of the quests", function()
+            Questie.db.char.complete[28090] = false
+            Questie.db.char.complete[28091] = false
+            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
+
+            Questie.db.char.complete[28090] = true
+            Questie.db.char.complete[28091] = false
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
+
+            Questie.db.char.complete[28090] = false
+            Questie.db.char.complete[28091] = true
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
+
             Questie.db.char.complete[28090] = true
             Questie.db.char.complete[28091] = true
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
 
+            Questie.db.char.complete[28090] = false
+            Questie.db.char.complete[28091] = false
+            QuestLogCache.questLog_DO_NOT_MODIFY = {[28090]={isComplete=0}}
+            QuestLogCache.questLog_DO_NOT_MODIFY = {[28091]={isComplete=0}}
+            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
+
+            QuestLogCache.questLog_DO_NOT_MODIFY = {[28090]={isComplete=1}}
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
+
+            QuestLogCache.questLog_DO_NOT_MODIFY = {[28091]={isComplete=1}}
             assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_HORDE))
         end)
 
-        it("should return true for Grim Batol Attack Alliance when 28103 and 28104 are complete", function()
+        it("should return true for Grim Batol Attack Alliance when any objective of 28103 or 28104 is complete or one of the quests", function()
+            Questie.db.char.complete[28103] = false
+            Questie.db.char.complete[28104] = false
+            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
+
+            Questie.db.char.complete[28103] = true
+            Questie.db.char.complete[28104] = false
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
+
+            Questie.db.char.complete[28103] = false
+            Questie.db.char.complete[28104] = true
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
+
             Questie.db.char.complete[28103] = true
             Questie.db.char.complete[28104] = true
-
             assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
 
             Questie.db.char.complete[28103] = false
             Questie.db.char.complete[28104] = false
-
-            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-
-            Questie.db.char.complete[28103] = true
-            Questie.db.char.complete[28104] = true
             QuestLogCache.questLog_DO_NOT_MODIFY = {[28103]={isComplete=0}}
             QuestLogCache.questLog_DO_NOT_MODIFY = {[28104]={isComplete=0}}
-
-            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
             assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
 
             QuestLogCache.questLog_DO_NOT_MODIFY = {[28103]={isComplete=1}}
+            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
+
             QuestLogCache.questLog_DO_NOT_MODIFY = {[28104]={isComplete=1}}
-
             assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-
-            QuestLogCache.questLog_DO_NOT_MODIFY = {}
-            Questie.db.char.complete[28103] = true
-
-            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-
-            QuestLogCache.questLog_DO_NOT_MODIFY = {}
-            Questie.db.char.complete[28104] = true
-
-            assert.is_true(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
-            assert.is_false(Phasing.IsSpawnVisible(phases.GRIM_BATOL_ATTACK_ALLIANCE))
         end)
 
         it("should correctly position Thordun Hammerblow", function()
